@@ -61,4 +61,6 @@ filter Book, Client, Author, BorrowedBook, Publisher
 
 paginate Book, Client, Author, BorrowedBook, Publisher with pagination
 
+dto all with mapstruct
+
 service all with serviceImpl

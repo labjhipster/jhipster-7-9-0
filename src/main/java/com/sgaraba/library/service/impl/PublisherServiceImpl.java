@@ -3,6 +3,8 @@ package com.sgaraba.library.service.impl;
 import com.sgaraba.library.domain.Publisher;
 import com.sgaraba.library.repository.PublisherRepository;
 import com.sgaraba.library.service.PublisherService;
+import com.sgaraba.library.service.dto.PublisherDTO;
+import com.sgaraba.library.service.mapper.PublisherMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,50 +24,56 @@ public class PublisherServiceImpl implements PublisherService {
 
     private final PublisherRepository publisherRepository;
 
-    public PublisherServiceImpl(PublisherRepository publisherRepository) {
+    private final PublisherMapper publisherMapper;
+
+    public PublisherServiceImpl(PublisherRepository publisherRepository, PublisherMapper publisherMapper) {
         this.publisherRepository = publisherRepository;
+        this.publisherMapper = publisherMapper;
     }
 
     @Override
-    public Publisher save(Publisher publisher) {
-        log.debug("Request to save Publisher : {}", publisher);
-        return publisherRepository.save(publisher);
+    public PublisherDTO save(PublisherDTO publisherDTO) {
+        log.debug("Request to save Publisher : {}", publisherDTO);
+        Publisher publisher = publisherMapper.toEntity(publisherDTO);
+        publisher = publisherRepository.save(publisher);
+        return publisherMapper.toDto(publisher);
     }
 
     @Override
-    public Publisher update(Publisher publisher) {
-        log.debug("Request to save Publisher : {}", publisher);
-        return publisherRepository.save(publisher);
+    public PublisherDTO update(PublisherDTO publisherDTO) {
+        log.debug("Request to save Publisher : {}", publisherDTO);
+        Publisher publisher = publisherMapper.toEntity(publisherDTO);
+        publisher = publisherRepository.save(publisher);
+        return publisherMapper.toDto(publisher);
     }
 
     @Override
-    public Optional<Publisher> partialUpdate(Publisher publisher) {
-        log.debug("Request to partially update Publisher : {}", publisher);
+    public Optional<PublisherDTO> partialUpdate(PublisherDTO publisherDTO) {
+        log.debug("Request to partially update Publisher : {}", publisherDTO);
 
         return publisherRepository
-            .findById(publisher.getId())
+            .findById(publisherDTO.getId())
             .map(existingPublisher -> {
-                if (publisher.getName() != null) {
-                    existingPublisher.setName(publisher.getName());
-                }
+                publisherMapper.partialUpdate(existingPublisher, publisherDTO);
 
                 return existingPublisher;
             })
-            .map(publisherRepository::save);
+            .map(publisherRepository::save)
+            .map(publisherMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Publisher> findAll(Pageable pageable) {
+    public Page<PublisherDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Publishers");
-        return publisherRepository.findAll(pageable);
+        return publisherRepository.findAll(pageable).map(publisherMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Publisher> findOne(Long id) {
+    public Optional<PublisherDTO> findOne(Long id) {
         log.debug("Request to get Publisher : {}", id);
-        return publisherRepository.findById(id);
+        return publisherRepository.findById(id).map(publisherMapper::toDto);
     }
 
     @Override

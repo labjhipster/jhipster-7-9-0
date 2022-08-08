@@ -1,7 +1,7 @@
 {
   "applications": ["library"],
   "changelogDate": "20220808074558",
-  "dto": "no",
+  "dto": "mapstruct",
   "embedded": false,
   "entityTableName": "client",
   "fields": [
