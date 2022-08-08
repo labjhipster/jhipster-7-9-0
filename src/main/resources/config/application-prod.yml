@@ -17,7 +17,7 @@ logging:
   level:
     ROOT: INFO
     tech.jhipster: INFO
-    com.mycompany.myapp: INFO
+    com.sgaraba.library: INFO
 
 management:
   metrics:
@@ -33,8 +33,8 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/jhipsterSampleApplication
-    username: jhipsterSampleApplication
+    url: jdbc:postgresql://localhost:5432/library
+    username: library
     password:
     hikari:
       poolName: Hikari
@@ -54,10 +54,10 @@ spring:
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
-# keytool -genkey -alias jhipstersampleapplication -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+# keytool -genkey -alias library -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
 #
 # You can also use Let's Encrypt:
-# https://maximilian-boehm.com/hp2121/Create-a-Java-Keystore-JKS-from-Let-s-Encrypt-Certificates.htm
+# See details in topic "Create a Java Keystore (.JKS) from Let's Encrypt Certificates" on https://maximilian-boehm.com/en-gb/blog
 #
 # Then, modify the server.ssl properties so your "server" configuration looks like:
 #
@@ -90,9 +90,9 @@ jhipster:
     cache: # Used by the CachingHttpHeadersFilter
       timeToLiveInDays: 1461
   cache: # Cache configuration
-    ehcache: # Ehcache configuration
-      time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
-      max-entries: 1000 # Number of objects in each cache entry
+    hazelcast: # Hazelcast distributed cache
+      time-to-live-seconds: 3600
+      backup-count: 1
   security:
     authentication:
       jwt:
@@ -101,7 +101,7 @@ jhipster:
         # - In the JHipster Registry (which includes a Spring Cloud Config server)
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
         # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
-        base64-secret: OTVhNmQzMWI5MjFhMzM4MDk3NmJiZjEzOWMzYzZkNzUxY2MwOGJmYmZhZTRjNmNkOTdmOGUxY2YyYTlkZTAzMjUxYjE1M2Q1OWEzMzk0NDVlMTVjZTM0ZGUzNzlhN2IzZDg4OWNhOWE1ZmZlM2Y0NGI2YmVhMmRjMDlhODVkZDc=
+        base64-secret: YTMzM2QzZWE3NjBjYzBhMGM5YTdhNDI4NTk0ODI0MzRhOTM1ZDEwMTk4NmRmYmZlMDcyODcxYzBjY2U3NzU4NTM3NDM1YzRjMTE1ZjFhOWExYWE4NGFlNWFiYTIzMzFiYzU2OGI0YzExY2RjYmQ4YmM2YzBjYThkNTViYWQwZjI=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

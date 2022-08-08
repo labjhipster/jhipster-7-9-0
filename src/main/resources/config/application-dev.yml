@@ -18,7 +18,7 @@ logging:
     ROOT: DEBUG
     tech.jhipster: DEBUG
     org.hibernate.SQL: DEBUG
-    com.mycompany.myapp: DEBUG
+    com.sgaraba.library: DEBUG
 
 spring:
   devtools:
@@ -32,8 +32,8 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/h2db/db/jhipstersampleapplication;DB_CLOSE_DELAY=-1
-    username: jhipsterSampleApplication
+    url: jdbc:h2:file:./target/h2db/db/library;DB_CLOSE_DELAY=-1
+    username: library
     password:
     hikari:
       poolName: Hikari
@@ -67,15 +67,15 @@ server:
 
 jhipster:
   cache: # Cache configuration
-    ehcache: # Ehcache configuration
-      time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
-      max-entries: 100 # Number of objects in each cache entry
+    hazelcast: # Hazelcast distributed cache
+      time-to-live-seconds: 3600
+      backup-count: 1
   # CORS is only enabled by default with the "dev" profile
   cors:
     # Allow Ionic for JHipster by default (* no longer allowed in Spring Boot 2.4+)
     allowed-origins: 'http://localhost:8100,https://localhost:8100,http://localhost:9000,https://localhost:9000,http://localhost:4200,https://localhost:4200'
     # Enable CORS when running in GitHub Codespaces
-    allowed-origin-patterns: 'https://*.githubpreview.dev'
+    allowed-origin-patterns: 'https://*.gitpod.io'
     allowed-methods: '*'
     allowed-headers: '*'
     exposed-headers: 'Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params'
@@ -85,7 +85,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: OTVhNmQzMWI5MjFhMzM4MDk3NmJiZjEzOWMzYzZkNzUxY2MwOGJmYmZhZTRjNmNkOTdmOGUxY2YyYTlkZTAzMjUxYjE1M2Q1OWEzMzk0NDVlMTVjZTM0ZGUzNzlhN2IzZDg4OWNhOWE1ZmZlM2Y0NGI2YmVhMmRjMDlhODVkZDc=
+        base64-secret: YTMzM2QzZWE3NjBjYzBhMGM5YTdhNDI4NTk0ODI0MzRhOTM1ZDEwMTk4NmRmYmZlMDcyODcxYzBjY2U3NzU4NTM3NDM1YzRjMTE1ZjFhOWExYWE4NGFlNWFiYTIzMzFiYzU2OGI0YzExY2RjYmQ4YmM2YzBjYThkNTViYWQwZjI=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
